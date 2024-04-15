@@ -10,6 +10,7 @@ use EIYARO\API\Block;
 use EIYARO\API\GetTransaction;
 use EIYARO\API\PendingTransactions;
 use EIYARO\API\Transaction;
+use EIYARO\API\BlockTransaction;
 
 class API {
     private $api_client;
@@ -37,7 +38,11 @@ class API {
                 $net_info = new NetInfo($json->data);
                 return $net_info;
             } else {
-                throw new \Exception("Error({$json->code}): {$json->msg}({$json->detail})");
+                if (isset($json->detail)) {
+                    throw new \Exception("Error({$json->code}): {$json->msg}({$json->detail})");
+                } else {
+                    throw new \Exception("Error({$json->code}): {$json->msg}({$json->error_detail})");
+                }
             }
         } catch (\Exception $e){
             echo $e->getMessage() . "\n";
@@ -53,7 +58,11 @@ class API {
                 $blockCount = intval($json->data->block_count);
                 return $blockCount;
             } else {
-                throw new \Exception("Error({$json->code}): {$json->msg}({$json->detail})");
+                if (isset($json->detail)) {
+                    throw new \Exception("Error({$json->code}): {$json->msg}({$json->detail})");
+                } else {
+                    throw new \Exception("Error({$json->code}): {$json->msg}({$json->error_detail})");
+                }
             }
         } catch (\Exception $e){
             echo $e->getMessage() . "\n";
@@ -69,7 +78,11 @@ class API {
                 $block = new Block($json->data);
                 return $block;
             } else {
-                throw new \Exception("Error({$json->code}): {$json->msg}({$json->detail})");
+                if (isset($json->detail)) {
+                    throw new \Exception("Error({$json->code}): {$json->msg}({$json->detail})");
+                } else {
+                    throw new \Exception("Error({$json->code}): {$json->msg}({$json->error_detail})");
+                }
             }
         } catch (\Exception $e){
             echo $e->getMessage() . "\n";
@@ -87,7 +100,11 @@ class API {
                 return $transaction;
 
             } else {
-                throw new \Exception("Error({$json->code}): {$json->msg}({$json->detail})");
+                if (isset($json->detail)) {
+                    throw new \Exception("Error({$json->code}): {$json->msg}({$json->detail})");
+                } else {
+                    throw new \Exception("Error({$json->code}): {$json->msg}({$json->error_detail})");
+                }
             }
         } catch (\Exception $e){
             echo $e->getMessage() . "\n";
@@ -104,12 +121,38 @@ class API {
                 return $transactions;
 
             } else {
-                throw new \Exception("Error({$json->code}): {$json->msg}({$json->detail})");
+                if (isset($json->detail)) {
+                    throw new \Exception("Error({$json->code}): {$json->msg}({$json->detail})");
+                } else {
+                    throw new \Exception("Error({$json->code}): {$json->msg}({$json->error_detail})");
+                }
             }
         } catch (\Exception $e){
             echo $e->getMessage() . "\n";
             return null;
         }
     }
+    public function getPendingTransaction(string $hash): BlockTransaction|null {
+        try{
+            $getTransaction = new GetTransaction($hash);
+            $response = $this->api_client->post('get-unconfirmed-transaction', json_encode($getTransaction));
+            $json = json_decode((string)$response->getBody());
+            if ($response->getStatusCode() == 200 && $json->status == 'success') {
+                $transaction = new BlockTransaction($json->data);
+                return $transaction;
+            } else {
+                if (isset($json->detail)) {
+                    throw new \Exception("Error({$json->code}): {$json->msg}({$json->detail})");
+                } else {
+                    throw new \Exception("Error({$json->code}): {$json->msg}({$json->error_detail})");
+                }
+            }
+        } catch (\Exception $e){
+            echo $e->getMessage() . "\n";
+            return null;
+        }
+    }
+
+
 }
 
