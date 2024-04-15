@@ -1,0 +1,29 @@
+{
+    "name": "eiyaro/core-php",
+    "description": "Set of classes to deal with EIYARO's API",
+    "type": "library",
+    "keywords": [
+        "EIYARO",
+        "api",
+        "datastructures",
+        "data-structures"
+    ],
+    "homepage": "https://github.com/EIYARO-Project/core-php",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Gustavo 'Gus' Carreno",
+            "email": "guscarreno@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "EIYARO\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=8.0",
+        "guzzlehttp/guzzle": "^7.8"
+    }
+}
