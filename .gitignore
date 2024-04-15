@@ -1,0 +1,4 @@
+# NosoData-PHP project specific
+
+# Composer specific
+/vendor/
