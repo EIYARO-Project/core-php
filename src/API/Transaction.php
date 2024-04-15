@@ -49,7 +49,8 @@ class Transaction implements \JsonSerializable {
         switch ($name) {
             case 'BlockTimeFormatted':
                 return $this->FormattedDateTime($this->BlockTime);
-                break;
+            default:
+              return '';
         }
     }
 

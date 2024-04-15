@@ -48,8 +48,9 @@ class Block implements \JsonSerializable {
         switch ($name) {
             case 'TimestampFormatted':
                 return $this->FormattedDateTime($this->TimeStamp);
-                break;
-        }
+            default:
+                return '';
+          }
     }
 
     public function jsonSerialize(): array {
