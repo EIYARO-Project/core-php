@@ -10,7 +10,7 @@ class TransactionOutput implements \JsonSerializable {
     public int $Position;
     public string $AssetID;
     public string $AssetAlias;
-    public object|null $AssetDefinition;
+    public AssetDefinition $AssetDefinition;
     public int $Amount;
     public string $AccountID;
     public string $AccountAlias;
@@ -27,7 +27,7 @@ class TransactionOutput implements \JsonSerializable {
         } else {
             $this->AssetAlias = '';
         }
-        $this->AssetDefinition = $json->asset_definition;
+        $this->AssetDefinition = new AssetDefinition($json->asset_definition);
         $this->Amount = $json->amount;
         if (isset($json->account_id)) {
             $this->AccountID = $json->account_id;
