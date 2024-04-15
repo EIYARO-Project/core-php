@@ -41,6 +41,18 @@ class Transaction implements \JsonSerializable {
         $this->size = $json->size;
     }
 
+    private function FormattedDateTime(int $seconds) {
+        return gmdate("Y-m-d H:i:s", $seconds);
+    }
+
+    public function __get($name) {
+        switch ($name) {
+            case 'BlockTimeFormatted':
+                return $this->FormattedDateTime($this->BlockTime);
+                break;
+        }
+    }
+
     public function jsonSerialize(): array {
         return [
             "tx_id"=> $this->TxID,

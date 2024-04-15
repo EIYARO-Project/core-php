@@ -40,6 +40,18 @@ class Block implements \JsonSerializable {
         }
     }
 
+    private function FormattedDateTime(int $seconds) {
+        return gmdate("Y-m-d H:i:s", $seconds);
+    }
+
+    public function __get($name) {
+        switch ($name) {
+            case 'TimestampFormatted':
+                return $this->FormattedDateTime($this->TimeStamp);
+                break;
+        }
+    }
+
     public function jsonSerialize(): array {
         return [
             "hash"=> $this->Hash,
