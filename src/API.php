@@ -8,6 +8,7 @@ use EIYARO\API\NetInfo;
 use EIYARO\API\GetBlock;
 use EIYARO\API\Block;
 use EIYARO\API\GetTransaction;
+use EIYARO\API\PendingTransactions;
 use EIYARO\API\Transaction;
 
 class API {
@@ -84,6 +85,23 @@ class API {
             if ($response->getStatusCode() == 200 && $json->status == 'success') {
                 $transaction = new Transaction($json->data);
                 return $transaction;
+
+            } else {
+                throw new \Exception("Error({$json->code}): {$json->msg}({$json->detail})");
+            }
+        } catch (\Exception $e){
+            echo $e->getMessage() . "\n";
+            return null;
+        }
+    }
+
+    public function getPendingTransactions(): PendingTransactions|null {
+        try{
+            $response = $this->api_client->post('list-unconfirmed-transactions');
+            $json = json_decode((string)$response->getBody());
+            if ($response->getStatusCode() == 200 && $json->status == 'success') {
+                $transactions = new PendingTransactions($json->data);
+                return $transactions;
 
             } else {
                 throw new \Exception("Error({$json->code}): {$json->msg}({$json->detail})");
