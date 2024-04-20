@@ -28,14 +28,14 @@ class Transaction implements \JsonSerializable {
                 $this->Inputs[] = new TransactionInput($input);
             }
         } else {
-            $this->inputs = [];
+            $this->Inputs = [];
         }
-        if (count($json->Outputs) > 0) {
+        if (count($json->outputs) > 0) {
             foreach ($json->outputs as $output) {
-                $this->outputs[] = new TransactionOutput($output);
+                $this->Outputs[] = new TransactionOutput($output);
             }
         } else {
-            $this->outputs = [];
+            $this->Outputs = [];
         }
         $this->StatusFail = $json->status_fail;
         $this->Size = $json->size;
