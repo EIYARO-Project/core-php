@@ -176,5 +176,25 @@ class API {
             return null;
         }
     }
+
+    public function getAsset(string $assetID): Asset|null {
+        try{
+            $response = $this->api_client->post('get-asset', "{\"id\": \"{$assetID}\"}");
+            $json = json_decode((string)$response->getBody());
+            if ($response->getStatusCode() == 200 && $json->status == 'success') {
+                $asset = new Asset($json->data);
+                return $asset;
+            } else {
+                if (isset($json->detail)) {
+                    throw new \Exception("Error({$json->code}): {$json->msg}({$json->detail})");
+                } else {
+                    throw new \Exception("Error({$json->code}): {$json->msg}({$json->error_detail})");
+                }
+            }
+        } catch (\Exception $e){
+            echo $e->getMessage() . "\n";
+            return null;
+        }
+    }
 }
 
