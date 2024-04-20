@@ -74,3 +74,19 @@ $transaction = $api->getPendingTransaction("fc64be31e56a448879f9984599cafead466e
 echo json_encode($transaction, JSON_PRETTY_PRINT)."\n";
 echo "===========\n\n";
 ```
+
+### List Assets
+```php
+echo "== List Assets ==\n";
+$assets = $api->getAssets();
+echo json_encode($assets, JSON_PRETTY_PRINT)."\n";
+echo "===========\n\n";
+```
+
+### Get Asset
+```php
+echo "== Get Asset ==\n";
+$asset = $api->getAsset('ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff');
+echo json_encode($asset, JSON_PRETTY_PRINT)."\n";
+echo "===========\n\n";
+```
