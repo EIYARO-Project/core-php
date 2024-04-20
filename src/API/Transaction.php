@@ -11,10 +11,10 @@ class Transaction implements \JsonSerializable {
     public int $BlockHeight;
     public int $BlockIndex;
     public int $BlockTransactionsCount;
-    public array $inputs;
-    public array $outputs;
-    public bool $statusFail;
-    public int $size;
+    public array $Inputs;
+    public array $Outputs;
+    public bool $StatusFail;
+    public int $Size;
 
     public function __construct(object $json) {
         $this->TxID = $json->tx_id;
@@ -25,20 +25,20 @@ class Transaction implements \JsonSerializable {
         $this->BlockTransactionsCount = $json->block_transactions_count;        
         if (count($json->inputs) > 0) {
             foreach ($json->inputs as $input) {
-                $this->inputs[] = new TransactionInput($input);
+                $this->Inputs[] = new TransactionInput($input);
             }
         } else {
             $this->inputs = [];
         }
-        if (count($json->outputs) > 0) {
+        if (count($json->Outputs) > 0) {
             foreach ($json->outputs as $output) {
                 $this->outputs[] = new TransactionOutput($output);
             }
         } else {
             $this->outputs = [];
         }
-        $this->statusFail = $json->status_fail;
-        $this->size = $json->size;
+        $this->StatusFail = $json->status_fail;
+        $this->Size = $json->size;
     }
 
     private function FormattedDateTime(int $seconds) {
@@ -62,10 +62,10 @@ class Transaction implements \JsonSerializable {
             "block_height"=> $this->BlockHeight,
             "block_index"=> $this->BlockIndex,
             "block_transactions_count"=> $this->BlockTransactionsCount, 
-            "inputs"=> $this->inputs,
-            "outputs"=> $this->outputs,
-            "status_fail"=> $this->statusFail,
-            "size"=> $this->size,
+            "inputs"=> $this->Inputs,
+            "outputs"=> $this->Outputs,
+            "status_fail"=> $this->StatusFail,
+            "size"=> $this->Size,
         ];
     }
 }
