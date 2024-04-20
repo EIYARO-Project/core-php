@@ -11,6 +11,7 @@ use EIYARO\API\GetTransaction;
 use EIYARO\API\PendingTransactions;
 use EIYARO\API\Transaction;
 use EIYARO\API\BlockTransaction;
+use EIYARO\API\Asset;
 
 class API {
     private $api_client;
@@ -153,6 +154,27 @@ class API {
         }
     }
 
-
+    public function getAssets(): array|null {
+        try{
+            $response = $this->api_client->post('list-assets', '{}');
+            $json = json_decode((string)$response->getBody());
+            if ($response->getStatusCode() == 200 && $json->status == 'success') {
+                $assets = [];
+                foreach ($json->data as $asset) {
+                    $assets[] = new Asset($asset);
+                }
+                return $assets;
+            } else {
+                if (isset($json->detail)) {
+                    throw new \Exception("Error({$json->code}): {$json->msg}({$json->detail})");
+                } else {
+                    throw new \Exception("Error({$json->code}): {$json->msg}({$json->error_detail})");
+                }
+            }
+        } catch (\Exception $e){
+            echo $e->getMessage() . "\n";
+            return null;
+        }
+    }
 }
 
