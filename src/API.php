@@ -46,7 +46,7 @@ class API {
                 }
             }
         } catch (\Exception $e){
-            echo $e->getMessage() . "\n";
+            //echo $e->getMessage() . "\n";
             return null;
         }
     }
@@ -66,7 +66,7 @@ class API {
                 }
             }
         } catch (\Exception $e){
-            echo $e->getMessage() . "\n";
+            //echo $e->getMessage() . "\n";
             return null;
         }
     }
@@ -86,7 +86,7 @@ class API {
                 }
             }
         } catch (\Exception $e){
-            echo $e->getMessage() . "\n";
+            //echo $e->getMessage() . "\n";
             return null;
         }
     }
@@ -108,7 +108,7 @@ class API {
                 }
             }
         } catch (\Exception $e){
-            echo $e->getMessage() . "\n";
+            //echo $e->getMessage() . "\n";
             return null;
         }
     }
@@ -129,7 +129,7 @@ class API {
                 }
             }
         } catch (\Exception $e){
-            echo $e->getMessage() . "\n";
+            //echo $e->getMessage() . "\n";
             return null;
         }
     }
@@ -149,7 +149,7 @@ class API {
                 }
             }
         } catch (\Exception $e){
-            echo $e->getMessage() . "\n";
+            //echo $e->getMessage() . "\n";
             return null;
         }
     }
@@ -172,7 +172,7 @@ class API {
                 }
             }
         } catch (\Exception $e){
-            echo $e->getMessage() . "\n";
+            //echo $e->getMessage() . "\n";
             return null;
         }
     }
@@ -192,7 +192,7 @@ class API {
                 }
             }
         } catch (\Exception $e){
-            echo $e->getMessage() . "\n";
+            //echo $e->getMessage() . "\n";
             return null;
         }
     }
