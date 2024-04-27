@@ -12,6 +12,7 @@ use EIYARO\API\PendingTransactions;
 use EIYARO\API\Transaction;
 use EIYARO\API\BlockTransaction;
 use EIYARO\API\Asset;
+use EIYARO\API\HashRate;
 
 class API {
     private $api_client;
@@ -196,5 +197,25 @@ class API {
             return null;
         }
     }
-}
+
+    public function getHashRate(int $blockNum): HashRate|null {
+        try{
+            $getBlock = new GetBlock($blockNum);
+            $response = $this->api_client->post('get-hash-rate', json_encode($getBlock));
+            $json = json_decode((string)$response->getBody());
+            if ($response->getStatusCode() == 200 && $json->status == 'success') {
+                $hashRate = new HashRate($json->data);
+                return $hashRate;
+            } else {
+                if (isset($json->detail)) {
+                    throw new \Exception("Error({$json->code}): {$json->msg}({$json->detail})");
+                } else {
+                    throw new \Exception("Error({$json->code}): {$json->msg}({$json->error_detail})");
+                }
+            }
+        } catch (\Exception $e){
+            //echo $e->getMessage() . "\n";
+            return null;
+        }
+    }}
 
