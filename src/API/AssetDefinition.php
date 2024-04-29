@@ -6,7 +6,7 @@ namespace EIYARO\API;
 
 class AssetDefinition implements \JsonSerializable {
     public int $Decimals;
-    public string $Description;
+    public string|object $Description;
     public string $Name;
     public string $Symbol;
 
