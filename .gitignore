@@ -1,5 +1,7 @@
-# NosoData-PHP project specific
+# Core-PHP project specific
 test-api
+test-address
+research/
 
 # Composer specific
 /vendor/
