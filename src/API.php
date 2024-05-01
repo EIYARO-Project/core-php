@@ -13,6 +13,7 @@ use EIYARO\API\Transaction;
 use EIYARO\API\BlockTransaction;
 use EIYARO\API\Asset;
 use EIYARO\API\HashRate;
+use EIYARO\API\ValidateAddress;
 
 class API {
     private $api_client;
@@ -217,5 +218,26 @@ class API {
             //echo $e->getMessage() . "\n";
             return null;
         }
-    }}
+    }
+
+    public function validateAddress(string $address): ValidateAddress|null {
+        try{
+            $response = $this->api_client->post('validate-address',"{\"address\":\"{$address}\"}");
+            $json = json_decode((string)$response->getBody());
+            if ($response->getStatusCode() == 200 && $json->status == 'success') {
+                $valid = new ValidateAddress($json->data);
+                return $valid;
+            } else {
+                if (isset($json->detail)) {
+                    throw new \Exception("Error({$json->code}): {$json->msg}({$json->detail})");
+                } else {
+                    throw new \Exception("Error({$json->code}): {$json->msg}({$json->error_detail})");
+                }
+            }
+        } catch (\Exception $e){
+            //echo $e->getMessage() . "\n";
+            return null;
+        }
+    }
+}
 
