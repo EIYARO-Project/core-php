@@ -15,9 +15,16 @@ class GetBlock implements \JsonSerializable {
     }
 
     public function jsonSerialize(): array {
-        return [
-            "block_height"=> $this->BlockHeight,
-            "block_hash"=> $this->BlockHash,
-        ];
+        if ($this->BlockHeight < 0) {
+            return [
+                "block_height"=> null,
+                "block_hash"=> $this->BlockHash,
+            ];
+        } else {
+            return [
+                "block_height"=> $this->BlockHeight,
+                "block_hash"=> $this->BlockHash,
+            ];
+        }
     }
 }

@@ -64,7 +64,7 @@ class Block implements \JsonSerializable {
             "nonce"=> $this->Nonce,
             "bits"=> $this->Bits,
             "difficulty"=> $this->Difficulty,
-            "transaction_merkle_rrot"=> $this->TransactionMerkleRoot,
+            "transaction_merkle_root"=> $this->TransactionMerkleRoot,
             "transaction_status_hash"=> $this->TransactionStatusHash,
             "transactions"=> $this->Transactions,
         ];
