@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types = 1);
 
 namespace EIYARO;
@@ -16,21 +15,10 @@ use EIYARO\API\HashRate;
 use EIYARO\API\ValidateAddress;
 
 class API {
-    private $api_client;
-    private $login;
-    private $password;
+    private APIClientInterface $api_client;
 
-    function __construct(string $base_uri, string|null $accessToken = null){
-        $this->login = null;
-        $this->password = null;
-        if ($accessToken !== null && str_contains($accessToken, ":")){
-            list($this->login, $this->password) = explode(":", $accessToken);
-        }
-        if ($this->login && $this->password){
-            $this->api_client = new APIClient($base_uri, 5, $this->login, $this->password);
-        } else {
-            $this->api_client = new APIClient($base_uri, 5);
-        }
+    function __construct(APIClientInterface $client){
+        $this->api_client = $client;
     }
 
     public function getNetInfo(): NetInfo|null {

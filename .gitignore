@@ -1,7 +1,34 @@
 # Core-PHP project specific
 test-api
 test-address
-research/
+/research/*
 
-# Composer specific
-/vendor/
+
+# Tool specific files #
+#######################
+# Composer
+/vendor/*
+# PHPUnit
+.phpunit.result.cache
+.phpunit.cache
+# vim
+*~
+*.swp
+*.swo
+# sublime text & textmate
+*.sublime-*
+*.stTheme.cache
+*.tmlanguage.cache
+*.tmPreferences.cache
+# Eclipse
+.settings/*
+# JetBrains, aka PHPStorm, IntelliJ IDEA
+.idea/*
+# NetBeans
+nbproject/*
+# Visual Studio Code
+.vscode
+# nova
+.nova
+# Sass preprocessor
+.sass-cache/

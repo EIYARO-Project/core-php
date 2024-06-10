@@ -7,14 +7,16 @@ namespace EIYARO;
 use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;
 
-class APIClient{
-    private $client;
+class APIClientGuzzle implements APIClientInterface {
+    private Client $client;
     private string $base_uri;
     private string|null $login;
     private string|null $password;
     private int $timeout;
+    private int $statusCode;
+    private string $statusMessage;
 
-    function __construct(string $base_uri, int $timeout, string|null $login = null, string|null $password = null){
+    public function __construct(string $base_uri, int $timeout, string|null $accessToken = null){
         $this->client = new Client(
             [
                 "base_uri"=> $base_uri,
@@ -23,14 +25,17 @@ class APIClient{
         );
         $this->base_uri = $base_uri;
         $this->timeout = $timeout;
-        $this->login = $login;
-        $this->password = $password;
+        $this->login = null;
+        $this->password = null;
+        if ($accessToken !== null && str_contains($accessToken, ":")){
+            list($this->login, $this->password) = explode(":", $accessToken);
+        }
     }
 
-    function get(string $method): ResponseInterface {
+    public function get(string $endpoint): ResponseInterface {
         if ($this->login && $this->password){
             $response = $this->client->get(
-                "/{$method}",
+                "/{$endpoint}",
                 [
                     "auth"=> [
                         $this->login,
@@ -41,16 +46,16 @@ class APIClient{
             );
         } else {
             $response = $this->client->get(
-                "/{$method}"
+                "/{$endpoint}"
             );
         }
         return $response;
     }
 
-    function post(string $method, string|null $body = null): ResponseInterface {
+    public function post(string $endpoint, string|null $body = null): ResponseInterface {
         if ($this->login && $this->password){
             $response = $this->client->post(
-                "/{$method}",
+                "/{$endpoint}",
                 [
                     "body" => $body,
                     "auth"=> [
@@ -62,7 +67,7 @@ class APIClient{
             );
         } else {
             $response = $this->client->post(
-                "/{$method}",
+                "/{$endpoint}",
                 [
                     "body"=> $body,
                 ]
@@ -70,5 +75,4 @@ class APIClient{
         }
         return $response;
     }
-
 }
