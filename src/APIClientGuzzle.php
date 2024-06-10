@@ -13,8 +13,6 @@ class APIClientGuzzle implements APIClientInterface {
     private string|null $login;
     private string|null $password;
     private int $timeout;
-    private int $statusCode;
-    private string $statusMessage;
 
     public function __construct(string $base_uri, int $timeout, string|null $accessToken = null){
         $this->client = new Client(

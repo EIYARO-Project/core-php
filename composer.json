@@ -35,6 +35,6 @@
         "phpunit/phpunit": "^11.2"
     },
     "scripts": {
-        "test":"phpunit --colors=always"
+        "test":"phpunit --display-warnings --display-deprecations --colors=always"
     }
 }
