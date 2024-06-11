@@ -9,7 +9,7 @@ use EIYARO\APIClientGuzzle;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
-class NetInfoTest extends TestCase {
+class BlockCountEndpointTest extends TestCase {
     /**
      * API Client
      * 
@@ -41,14 +41,15 @@ class NetInfoTest extends TestCase {
     }
 
     /**
-     * Test the Net Info endpoint
+     * Test the Get Block Count endpoint
      * 
      * @return void
      */
-    public function testNetInfoIsObject(): void {
-        $netInfo = $this->api->getNetInfo();
-        $this->assertIsObject($netInfo);
-        //$this->assertGreaterThanOrEqual(0, $netInfo->HighestBlock, "NetInfo Height >= 0");
+    public function testBlockCountIsInt(): void {
+        $client = new APIClientGuzzle(BASEURL, 5);
+        $api = new API($client);
+        $blockCount = $api->getBlockCount();
+        $this->assertIsInt($blockCount);
+        $this->assertGreaterThanOrEqual(0, $blockCount, "Block Count >= 0");
     }
-
 }
